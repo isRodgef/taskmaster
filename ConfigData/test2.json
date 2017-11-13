@@ -1,0 +1,38 @@
+{
+  "PROCESS1": {
+    "CMD": "TEST",
+    "NUM": "1",
+    "AUTO_S": "true",
+    "RESTART": "true",
+    "RET_CODE": "0",
+    "LIVE_TIME": "10",
+    "RESTART_NUM": "10",
+    "SIGNAL": "ERR",
+    "IN": ";discard",
+    "OUT": ";discard",
+    "ERROR": ";discard",
+    "ENV_VARS": "PATH=test,TESTVAR=10,ENV=all",
+    "DIR": "./",
+    "USER_PERM": "R,W,X",
+    "GROUP_PERM": "R,W,X",
+    "WORLD_PERM": "R,W,X"
+  },
+    "PROCESS2": {
+    "CMD": "TEST",
+    "NUM": "1",
+    "AUTO_S": "true",
+    "RESTART": "true",
+    "RET_CODE": "0",
+    "LIVE_TIME": "10",
+    "RESTART_NUM": "10",
+    "SIGNAL": "ERR",
+    "IN": ";discard",
+    "OUT": ";discard",
+    "ERROR": ";discard",
+    "ENV_VARS": "PATH=test,TESTVAR=10,ENV=all",
+    "DIR": "./",
+    "USER_PERM": "R,W,X",
+    "GROUP_PERM": "R,W,X",
+    "WORLD_PERM": "R,W,X"
+  }
+}

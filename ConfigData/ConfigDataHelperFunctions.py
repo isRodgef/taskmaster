@@ -79,9 +79,9 @@ def compare_values(values, field, data):
                 error = False
         if error == True:
             print (field + " in " + process + " might not be well formatted, please make sure you are using " +
-                   "one of these values:", end="")
+                   "one of these values:", "")
             for value in values:
-                print (" " + value + ",", end="")
+                print (" " + value + ",", "")
             print("")
             file_error = True
         error = True

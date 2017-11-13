@@ -22,15 +22,15 @@ class ConfigData:
             test = compare_values(self.restart_values, "RESTART", d_new)
         return (test)
     def load_data(self, file):
-        self.data = None
         data_new = dict()
         try:
             f = open(file, "r")
             try:
                 data_new = json.load(f)
                 if self.check_data(data_new):
-                    if bool(self.data):
+                    if self.data:
                         print("I remembered that config was initialized")
+                        self.changed_processes = (set(self.data) - set(data_new)) | (set(data_new) - set(self.data))
                     self.data = data_new
                     print("Config initialization succeeded")
                 else:
@@ -41,5 +41,5 @@ class ConfigData:
         except FileNotFoundError:
             print(file + " does not exist")
     def __init__(self, file):
+        self.data = None
         ConfigData.load_data(self, file)
-
