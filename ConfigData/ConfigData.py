@@ -30,7 +30,8 @@ class ConfigData:
                 if self.check_data(data_new):
                     if self.data:
                         print("I remembered that config was initialized")
-                        self.changed_processes = (set(self.data) - set(data_new)) | (set(data_new) - set(self.data))
+                        self.changed_processes = list((set(self.data) - set(data_new)) | (set(data_new) - set(self.data)))
+                        compare_dicts(self.changed_processes, self.data, data_new)
                     self.data = data_new
                     print("Config initialization succeeded")
                 else:
@@ -42,4 +43,5 @@ class ConfigData:
             print(file + " does not exist")
     def __init__(self, file):
         self.data = None
+        self.changed_processes = []
         ConfigData.load_data(self, file)

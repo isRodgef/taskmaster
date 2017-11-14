@@ -17,6 +17,13 @@ def compare_keys(key_words, data):
     return (ret)
 
 
+def match_process_name_to_cmd(data):
+    for process in data:
+        if process != data[process]["CMD"]:
+            print ("Process name does not match process CMD. process name shoud be: " + data[process]["CMD"]
+                   + " not " + process)
+
+
 def compare_permission(perm, perm_values):
     if perm is perm_values[0]:
         return (4)
@@ -25,6 +32,7 @@ def compare_permission(perm, perm_values):
     if perm is perm_values[2]:
         return (1)
     return (-1)
+
 
 def format_permissions(values, delm, types, data):
     error = False
@@ -55,6 +63,7 @@ def format_permissions(values, delm, types, data):
         new_perm_elem = "0"
     return (not error)
 
+
 def format_env_vars(delm, data):
     error = False
     for process in data:
@@ -70,6 +79,7 @@ def format_env_vars(delm, data):
                 data[process]["ENV_VARS"] = env_var_list
     return (not error)
 
+
 def compare_values(values, field, data):
     error = True
     file_error = False
@@ -77,7 +87,7 @@ def compare_values(values, field, data):
         for value in values:
             if str(data[process][field]) == value:
                 error = False
-        if error == True:
+        if error:
             print (field + " in " + process + " might not be well formatted, please make sure you are using " +
                    "one of these values:", "")
             for value in values:
@@ -86,3 +96,11 @@ def compare_values(values, field, data):
             file_error = True
         error = True
     return (not file_error)
+
+
+def compare_dicts(diff_list, old_data, new_data):
+    for process in old_data:
+        if process in new_data.keys():
+            for field in old_data[process]:
+                if old_data[process][field] != new_data[process][field]:
+                    diff_list.append(process)
