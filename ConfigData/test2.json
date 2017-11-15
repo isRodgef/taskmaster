@@ -1,5 +1,5 @@
 {
-  "PROCESS1": {
+  "TEST": {
     "CMD": "TEST",
     "NUM": "1",
     "AUTO_S": "true",
@@ -17,8 +17,8 @@
     "GROUP_PERM": "R,W,X",
     "WORLD_PERM": "R,W,X"
   },
-    "PROCESS2": {
-    "CMD": "TEST",
+    "TEST2": {
+    "CMD": "TEST2",
     "NUM": "1",
     "AUTO_S": "true",
     "RESTART": "true",
