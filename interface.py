@@ -9,40 +9,88 @@
 #    Updated: 2017/11/15 15:46:29 by rfrancis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-from ConfigData import *
-
+from ConfigDataSources.ConfigData import *
+import subprocess as sp
+import sys
 
 class Interface:
-    def __init__(self, config):
-        #self.tm = tm
+    def __init__(self, config=ConfigData()):
+        # self.tm = tm
+        tmp = sp.call("clear", shell=True)
+        print ("TASKMASTER!!")
         self.loop = False
         self.config = config
+        for process in config.data:
+            if config.data[process]["AUTO_S"] == "true":
+                self.start(process)
 
     def exit(self):
         self.loop = False
 
+    def start(self, cmd):
+            if str(cmd) in self.config.data.keys():
+                print("running " + cmd + "...")
+            else:
+                print ("That is not a known process")
+
+    def stop(self, cmd):
+            if str(cmd) in self.config.data.keys():
+                print("stopping " + cmd + "...")
+            else:
+                print ("That is not a known process")
+
+    def restart(self, cmd):
+            if str(cmd) in self.config.data.keys():
+                self.stop(cmd)
+                self.start(cmd)
+            else:
+                print ("That is not a known process")
+
+    def status(self):
+        print ("program status")
+
+    def loadfile(self, cmd):
+        self.config.load_data(cmd)
+        for diff in self.config.changed_processes:
+            self.stop(diff)
+
     def run(self):
         self.loop = True
         while self.loop:
-            cmd = input(">>").split(" ")
+            cmd = str(input(">>")).split(" ")
             if cmd[0] == "start":
                 if len(cmd) > 1:
-                    print (self.config.data.keys())
-                    if str(cmd[1]) in self.config.data.keys():
-                        print("running...")
-                    else:
-                        print ("That is not a known process")
-                    # self.tm.run()
-            if cmd[0] == "stop":
-                print("stopping")
-            if cmd[0] == "loadfile":
+                    self.start(cmd[1])
+                else:
+                    print ("No process specified!")
+            elif cmd[0] == "stop":
                 if len(cmd) > 1:
-                    self.config.load_data(cmd[1])
-            if cmd[0] == "exit":
+                    self.stop(cmd[1])
+                else:
+                    print ("No process specified!")
+            elif cmd[0] == "restart":
+                if len(cmd) > 1:
+                    self.restart(cmd[1])
+                else:
+                    print ("No process specified!")
+            elif cmd[0] == "status":
+                self.status()
+            elif cmd[0] == "loadfile":
+                if len(cmd) > 1:
+                    self.loadfile(cmd[1])
+                else:
+                    print ("No config file specified!")
+            elif cmd[0] == "clear" and len(cmd) == 1:
+                print ("TASKMASTER!!")
+                tmp = sp.call("clear", shell=True)
+            elif cmd[0] == "exit" and len(cmd) == 1:
                 self.exit()
+            else:
+                print ("Command not found!")
 
 
 if __name__ == '__main__':
-    configData = ConfigData()
-    e_loop = Interface(configData)
-    e_loop.run()
+    inter_loop = Interface()
+    if (len(sys.argv) > 1):
+        inter_loop.loadfile(sys.argv[1])
+    inter_loop.run()

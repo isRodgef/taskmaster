@@ -1,5 +1,5 @@
 import json
-from ConfigDataHelperFunctions import *
+from ConfigDataSources.ConfigDataHelperFunctions import *
 
 
 class ConfigData:
@@ -35,6 +35,7 @@ class ConfigData:
 
     def load_data(self, file):
         data_new = dict()
+        self.changed_processes = []
         try:
             f = open(file, "r")
             try:
@@ -55,5 +56,5 @@ class ConfigData:
             except ValueError as err:
                 print(err)
         except FileNotFoundError:
-            print(file + " does not exist")
+            print("Could not find file: " + file)
 
