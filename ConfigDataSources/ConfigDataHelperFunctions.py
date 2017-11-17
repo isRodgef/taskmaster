@@ -9,13 +9,23 @@ def is_empty(data):
 
 
 def compare_fields(key_words, data):
-    ret = True
+    error = False
     for process in data:
         for word in key_words:
             if word not in data[process].keys():
                 print("Field " + word + " missing for process " + process)
-                ret = False
-    return (ret)
+                error = True
+    return (not error)
+
+
+def check_numbers(key_words, data):
+    error = False
+    for process in data:
+        for num in range(3, 7):
+            if not str(data[process][key_words[num]]).isdigit():
+                error = True
+                print ("Field " + key_words[num] + " in process " + process + " needs to be a number")
+    return (not error)
 
 
 def match_process_name_to_cmd(data):
@@ -40,6 +50,7 @@ def compare_permission(perm, perm_values):
 
 def format_permissions(values, delm, types, data):
     error = False
+    file_error = False
     perm = 0
     new_perm_elem = "0"
     for process in data:
@@ -55,6 +66,8 @@ def format_permissions(values, delm, types, data):
                     if perm < 1 or perm > 7:
                         error = True
             if error:
+                file_error = True
+                error = False
                 print(type + " of " + process + " might not be well formatted. Please make sure you are using " +
                       "R, W, and X to indicate " +
                       " read, write, and execute permissions, deleminated by commas without any spaces, as in \"R,W,X\"." +

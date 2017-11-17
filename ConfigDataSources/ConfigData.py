@@ -3,7 +3,7 @@ from ConfigDataSources.ConfigDataHelperFunctions import *
 
 
 class ConfigData:
-    required_fields = ["CMD", "NUM", "AUTO_S", "RESTART", "RET_CODE", "LIVE_TIME", "RESTART_NUM", "SIGNAL", "IN", "OUT",
+    required_fields = ["CMD","AUTO_S", "RESTART", "NUM", "RET_CODE", "LIVE_TIME", "RESTART_NUM", "SIGNAL", "IN", "OUT",
                        "ERROR", "ENV_VARS", "DIR", "USER_PERM", "GROUP_PERM", "WORLD_PERM"]
     auto_s_values = ["true", "false"]
     restart_values = ["true", "false", "on_error"]
@@ -21,6 +21,8 @@ class ConfigData:
 
     def check_data(self, d_new):
         test = compare_fields(self.required_fields, d_new)
+        if test is True:
+            test = check_numbers(self.required_fields, d_new)
         if test is True:
             test = match_process_name_to_cmd(d_new)
         if test is True:

@@ -1,9 +1,9 @@
 {
   "TEST": {
     "CMD": "TEST",
-    "NUM": "1",
     "AUTO_S": "true",
     "RESTART": "true",
+    "NUM": "0",
     "RET_CODE": "0",
     "LIVE_TIME": "10",
     "RESTART_NUM": "10",
@@ -19,12 +19,12 @@
   },
     "TEST2": {
     "CMD": "TEST2",
-    "NUM": "1",
     "AUTO_S": "true",
     "RESTART": "true",
+    "NUM": "10",
     "RET_CODE": "0",
-    "LIVE_TIME": "10",
-    "RESTART_NUM": "10",
+    "LIVE_TIME": "0",
+    "RESTART_NUM": "a",
     "SIGNAL": "ERR",
     "IN": ";discard",
     "OUT": ";discard",

@@ -53,7 +53,7 @@ class Interface:
     def loadfile(self, cmd):
         self.config.load_data(cmd)
         for diff in self.config.changed_processes:
-            self.stop(diff)
+            self.stop(diff, False)
 
     def stop_all(self):
         for process in self.config.data:
@@ -70,7 +70,7 @@ class Interface:
                     print ("No process specified!")
             elif cmd[0] == "stop":
                 if len(cmd) > 1:
-                    self.stop(cmd[1])
+                    self.stop(cmd[1], True)
                 else:
                     print ("No process specified!")
             elif cmd[0] == "restart":
