@@ -5,10 +5,20 @@ import os
 import threading
 
 
+def str_to_dic(dic):
+	d = {}
+	for b in dic:
+		i = b.split('=')
+		d[i[0]] = i[1]
+	return d
+				
+
 class Task:
 	def __init__(self, dic):
 		self.attr = dic
-		self.proc = None 
+		self.proc = None
+		self.attr["ENV_VARS"] = str_to_dic(self.attr["ENV_VARS"])
+		print (self.attr["ENV_VARS"])
 	def start(self):
 		rerun = True
 		while self.attr['NUM'] > 0:
@@ -53,9 +63,5 @@ class TaskManager:
 			if j.attr['CMD'] == pname:
 				j.proc.terminate()
 
-
-if __name__ == '__main__':
-	Task({"CMD" : "echo -n 'l'", "STDOUT" : "STDOUT", "NUM" : 10 , "RET_CODE" : 3, "RESTART_NUM" : 2 , "DIR" : "." }).start()
-	pass
 
 
