@@ -25,6 +25,7 @@ class Interface:
                 self.start(process)
 
     def exit(self):
+        self.stop_all()
         self.loop = False
 
     def start(self, cmd):
@@ -33,7 +34,7 @@ class Interface:
             else:
                 print ("That is not a known process")
 
-    def stop(self, cmd):
+    def stop(self, cmd, flag):
             if str(cmd) in self.config.data.keys():
                 print("stopping " + cmd + "...")
             else:
@@ -53,6 +54,10 @@ class Interface:
         self.config.load_data(cmd)
         for diff in self.config.changed_processes:
             self.stop(diff)
+
+    def stop_all(self):
+        for process in self.config.data:
+            self.stop(process, False)
 
     def run(self):
         self.loop = True
@@ -81,8 +86,10 @@ class Interface:
                 else:
                     print ("No config file specified!")
             elif cmd[0] == "clear" and len(cmd) == 1:
-                print ("TASKMASTER!!")
                 tmp = sp.call("clear", shell=True)
+                print ("TASKMASTER!!")
+            elif cmd[0] == "stopall" and len(cmd) == 1:
+                self.stop_all()
             elif cmd[0] == "exit" and len(cmd) == 1:
                 self.exit()
             else:
@@ -90,7 +97,9 @@ class Interface:
 
 
 if __name__ == '__main__':
-    inter_loop = Interface()
+    inter_loop = None
     if (len(sys.argv) > 1):
-        inter_loop.loadfile(sys.argv[1])
+        inter_loop = Interface(config=ConfigData(sys.argv[1]))
+    else:
+        inter_loop = Interface()
     inter_loop.run()
