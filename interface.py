@@ -40,14 +40,13 @@ class Interface:
 
 	def start(self, cmd):
 		if str(cmd) in self.config.data.keys():
-			print("running " + cmd + "...")
+			self.task_list.start(cmd)
 		else:
 			print ("That is not a known process")
 
 	def stop(self, cmd, flag):
-		self.task_list.stop(cmd)
 		if str(cmd) in self.config.data.keys():
-			print("stopping " + cmd + "...")
+			self.task_list.stop(cmd)
 		else:
 			print ("That is not a known process")
 
@@ -110,7 +109,7 @@ class Interface:
 			elif cmd[0] == "clear" and len(cmd) == 1:
 				tmp = sp.call("clear", shell=True)
 				print ("TASKMASTER!!")
-			elif cmd[0] == "stopall" and len(cmd) == 1:
+			elif cmd[0] == "stop_all" and len(cmd) == 1:
 				self.stop_all()
 			elif cmd[0] == "exit" and len(cmd) == 1:
 				self.exit()
