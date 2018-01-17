@@ -59,8 +59,10 @@ class Interface:
 			print ("That is not a known process")
 
 	def status(self):
-		print ("program status")
-		self.task_list.status()
+		if not self.config.data:
+			print ("No config file loaded, no process info to display")
+		else:
+			self.task_list.status()
 
 	def loadfile(self, cmd):
 		self.config.load_data(cmd)
@@ -70,6 +72,12 @@ class Interface:
 	def stop_all(self):
 		for process in self.config.data:
 			self.stop(process, False)
+	
+	def help(self):
+		print ("The commands that this shell can run are:" +
+				"\nstart process_name \nstop process_name \nstop_all" +
+				"\nrestart process_name" +
+				"\nloadfile file_name \nstatus \nexit")
 
 	def run(self):
 		self.loop = True
@@ -97,6 +105,8 @@ class Interface:
 					self.loadfile(cmd[1])
 				else:
 					print ("No config file specified!")
+			elif cmd[0] == "help":
+				self.help()
 			elif cmd[0] == "clear" and len(cmd) == 1:
 				tmp = sp.call("clear", shell=True)
 				print ("TASKMASTER!!")
@@ -105,7 +115,8 @@ class Interface:
 			elif cmd[0] == "exit" and len(cmd) == 1:
 				self.exit()
 			else:
-				print ("Command not found!")
+				print ("Command not found!\nType help for a list of available" +
+						 " commands")
 
 
 if __name__ == '__main__':
@@ -114,5 +125,4 @@ if __name__ == '__main__':
 		inter_loop = Interface(config=ConfigData(sys.argv[1]))
 	else:
 		inter_loop = Interface()
-
 	inter_loop.run()
