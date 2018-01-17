@@ -30,7 +30,7 @@ class Task:
 		print (STDOUT_value)
 		#print (self.attr["RESTART_NUM"], "ll")
 		while int(self.attr["RESTART_NUM"]) == 0:
-			if	self.attr["OUT"] == "stdout":
+			if	self.attr["OUT"].tolower() == "stdout":
 				print ("STDOUT:", (STDOUT_value[:len(STDOUT_value)-1]))
 			else :
 				fi = open(self.attr["OUT"], "w+")
@@ -67,9 +67,10 @@ class TaskManager:
 	def stop(self,pname):
 		for j in self.processes:
 			if j.attr['CMD'] == pname:
-				print ("POES")
-				print (pname)
-				j.proc.terminate()
+				if j.proc.terminate():
+					print ("stopping pname " , pname, "\n")
+				else:
+					print ("processs not found \n")
 				#os.killpg(int(j.proc.pid),signal.SIGTERM)
 
 
